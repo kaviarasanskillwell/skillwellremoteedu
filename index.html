@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SKILWELL Class Registration</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* 🔵 Animated background */
+    body {
+      background: linear-gradient(-45deg, #0a1f44, #182848, #000428, #1f1f1f);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .container {
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.96);
+      margin: 60px auto;
+      padding: 35px 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      animation: slideIn 0.6s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 25px;
+      max-width: 100%;
+      width: 280px;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.03);
+    }
+
+    h2 {
+      text-align: center;
+      color: navy;
+      margin-bottom: 30px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      background: navy;
+      color: white;
+      border: none;
+      font-size: 16px;
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #001f4d;
+    }
+
+    .thank-you {
+      display: none;
+      text-align: center;
+      color: green;
+      font-size: 18px;
+      margin-top: 30px;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      font-size: 16px;
+      margin-top: 15px;
+      color: #555;
+    }
+
+    .loading::after {
+      content: '⏳ Submitting...';
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #ccc;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form id="registerForm">
+      <img src="https://iili.io/FlNsXLb.md.png" class="logo" alt="SKILWELL Logo" loading="lazy">
+
+      <h2>Register for Class</h2>
+
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+
+      <select name="course" required>
+        <option value="">Select Course</option>
+        <option value="Python">Python</option>
+        <option value="Excel">Excel</option>
+        <option value="Power BI">Power BI</option>
+      </select>
+
+      <select name="language" required>
+        <option value="">Select Language</option>
+        <option value="English">English</option>
+        <option value="Tamil">Tamil</option>
+      </select>
+
+      <button type="submit">Submit</button>
+      <div class="loading" id="loading"></div>
+    </form>
+
+    <div class="thank-you" id="thankYouMessage">
+      ✅ Thank you for your registration!
+    </div>
+  </div>
+
+  <footer>
+    © 2025 SKILWELL Education | All Rights Reserved
+  </footer>
+
+  <script>
+    const form = document.getElementById("registerForm");
+    const thankYou = document.getElementById("thankYouMessage");
+    const loading = document.getElementById("loading");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      loading.style.display = "block";
+
+      const formData = new FormData(form);
+
+      fetch("https://script.google.com/macros/s/AKfycbw4VXo9PIbLzT4cIKvRY5zx8Cc7YKek5J8dgz-7tTxE6R9HSaAJzfJ1CUVxkjp3HUKg/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.text())
+      .then(data => {
+        loading.style.display = "none";
+        form.style.display = "none";
+        thankYou.style.display = "block";
+      })
+      .catch(err => {
+        loading.style.display = "none";
+        alert("❌ Something went wrong. Please try again.");
+        console.error("Error:", err);
+      });
+    });
+  </script>
+
+</body>
+</html>
